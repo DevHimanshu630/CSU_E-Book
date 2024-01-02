@@ -148,7 +148,7 @@ body{
 .magazine-viewport .next-button,
 .magazine-viewport .previous-button{
 	width:22px;
-	height:800px;
+	height:600px;
 	position:absolute;
 	top:0;
 }
