@@ -9,10 +9,10 @@
 </head>
 <body>
 
+<audio id="pageTurnAudio" src="music.ogg"></audio>
+
 <div id="canvas">
-
     <div class="zoom-icon zoom-icon-in"></div>
-
     <div class="magazine-viewport">
         <div class="container">
             <div class="magazine">
@@ -23,12 +23,8 @@
             </div>
         </div>
     </div>
-
     <!-- Thumbnails -->
-    <div class="thumbnails">
-     
-    </div>
-
+    <div class="thumbnails"></div>
 </div>
 
 <script type="text/javascript">
@@ -77,8 +73,8 @@
         }
 
         flipbook.turn({
-            width: 922,
-            height: 600,
+            width: 1100,
+            height: 800,
             duration: 1000,
             acceleration: !isChrome(),
             gradients: true,
@@ -102,6 +98,12 @@
                     $('.thumbnails .page-' + page)
                         .parent()
                         .addClass('current');
+
+                    // Play the page turn audio
+                    var pageTurnAudio = document.getElementById('pageTurnAudio');
+                    if (pageTurnAudio) {
+                        pageTurnAudio.play();
+                    }
                 },
                 turned: function(event, page, view) {
                     disableControls(page);
@@ -256,13 +258,6 @@
 
         }
 
-
-        // if ($.isTouch) {
-        //     $('.magazine').bind('touchstart', regionClick);
-        // } else {
-        //     $('.magazine').click(regionClick);
-        // }
-
         $('.next-button').bind($.mouseEvents.over, function() {
 
             $(this).addClass('next-button-hover');
@@ -310,11 +305,9 @@
         resizeViewport();
 
         $('.magazine').addClass('animated');
-
     }
 
     // Zoom icon
-
     $('.zoom-icon').bind('mouseover', function() {
         if ($(this).hasClass('zoom-icon-in'))
             $(this).addClass('zoom-icon-in-hover');
@@ -340,7 +333,6 @@
 
     $('#canvas').hide();
 
-
     yepnope({
         test: Modernizr.csstransforms,
         yep: ['../../lib/turn.js'],
@@ -348,7 +340,6 @@
         both: ['../../lib/zoom.min.js', 'js/magazine.js', 'css/magazine.css'],
         complete: loadApp
     });
-
 </script>
 
 </body>
