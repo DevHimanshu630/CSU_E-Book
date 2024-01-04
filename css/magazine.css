@@ -1,6 +1,8 @@
 body{
 	overflow:hidden;
-	background-color:#fcfcfc;
+	background-color: #fff;
+	background-image: url("../bg1.jpg");
+	background-size: cover;
 	margin:0;
 	padding:0;
 }
@@ -10,18 +12,18 @@ body{
 	top:50%;
 	left:50%;
 	width:922px;
-	/* width: 100vw; */
 	height:600px;
 	margin:auto;
 }
 
 .magazine-viewport .magazine{
 	width:922px;
-	/* width: 100vw; */
 	height:600px;
 	left:-461px;
+	/* left: -250px; */
 	top:-300px;
 }
+
 
 .magazine-viewport .page{
 	width:461px;

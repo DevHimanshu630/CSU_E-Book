@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <title>Using turn.js and the new zoom feature</title>
-    <meta name="viewport" content="width=1050, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
     <script
       type="text/javascript"
       src="../../extras/jquery.min.1.7.js"
@@ -18,18 +18,33 @@
       background-color: rgb(163, 66, 66);
       color: white;
       cursor: pointer;
-      width: 30%;
+      width: 20%;
       height: 5%;
       position: absolute;
       top: 90%;
-      left: 50%;
+      left: 70%;
       display: flex;
       justify-content: space-around;
       align-items: center;
       font-size: 30px;
     }
-   
 
+    @media screen and (max-width: 651px) {
+      body{
+        background-image: url('/bg1.jpg');
+        background-size: cover;
+        /* background-repeat: no-repeat; */
+      }
+      .success {
+        display: none;
+      }
+      .magazine-viewport .magazine {
+        /* width: 922px;
+        height: 600px; */
+        left: -170px;
+        top: -300px;
+      }
+    }
   </style>
   <body>
     <audio id="pageTurnAudio" src="music.ogg"></audio>
@@ -70,10 +85,13 @@
         var flipbook = $(".magazine");
 
         var displayMode = window.innerWidth < 650 ? "single" : "double";
+        var displayWidthForMobile = window.innerWidth < 650 ? "350" : "900";
+        var displayheightForMobile = window.innerWidth < 650 ? "500" : "600";
+        console.log(window.innerWidth);
 
         flipbook.turn({
-          width: 900,
-          height: 600,
+          width: displayWidthForMobile,
+          height: displayheightForMobile,
           duration: 1500,
           acceleration: !isChrome(),
           gradients: true,
