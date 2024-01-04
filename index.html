@@ -98,6 +98,7 @@
           autoCenter: true,
           elevation: 50,
           display: displayMode,
+          swipe: true,
           pages: 90,
           when: {
             turning: function (event, page, view) {
@@ -127,8 +128,16 @@
                 addPage(pages[i], flipbook);
             },
           },
+          
         });
+        flipbook.on("swipeleft", function (event) {
+                $(this).turn("next");
+            });
 
+            // Swipe right to turn to the previous page
+            flipbook.on("swiperight", function (event) {
+                $(this).turn("previous");
+            });
         $(document).keydown(function (e) {
           var previous = 37,
             next = 39,
