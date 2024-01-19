@@ -3,15 +3,26 @@
   <head>
     <title>Using turn.js and the new zoom feature</title>
     <meta name="viewport" content="width=device-width" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script
       type="text/javascript"
       src="../../extras/jquery.min.1.7.js"
     ></script>
     <script
       type="text/javascript"
-      src="../../extras/modernizr.2.5.3.min.js"  
-    ></script>  
-    <script type="text/javascript" src="../../lib/hash.js"></script> 
+      src="../../extras/modernizr.2.5.3.min.js"
+    ></script>
+    <script type="text/javascript" src="../../lib/hash.js"></script>
+    <!-- <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.4.5/jquery.mobile.min.js"
+      integrity="sha512-FbnNPigZZCDhMM22ezvan3xN2/E/oBd9GxqtpiBcK1VZuzBAt0V1EmTtteoYuYxWrqwqBA6zb1OTB887QSjAsw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script> -->
+
+    <!-- Other script tags -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
   </head>
   <style>
     .success {
@@ -30,8 +41,8 @@
     }
 
     @media screen and (max-width: 651px) {
-      body{
-        background-image: url('/bg1.jpg');
+      body {
+        background-image: url("/bg1.jpg");
         background-size: cover;
       }
       .success {
@@ -62,28 +73,26 @@
       </div>
     </div>
 
-    <script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
     <script type="text/javascript">
-      function addPage(page, book) {
-        var id,
-          pages = book.turn("pages");
-        var $pageElement = $("<div />", { class: "page", id: "page-" + page });
-        $pageElement.css("background-image", "url(pages/" + page + ".jpg)");
-        book.turn("addPage", $pageElement, page);
-        if (page > pages) {
-          book.turn("page", pages + 1);
-        }
-      }
-    
+      // function addPage(page, book) {
+      //   var id,
+      //     pages = book.turn("pages");
+      //   var $pageElement = $("<div />", { class: "page", id: "page-" + page });
+      //   $pageElement.css("background-image", "url(pages/" + page + ".jpg)");
+      //   book.turn("addPage", $pageElement, page);
+      //   if (page > pages) {
+      //     book.turn("page", pages + 1);
+      //   }
+      // }
+
       function loadApp() {
         var flipbook = $(".magazine");
-    
+
         var displayMode = window.innerWidth < 650 ? "single" : "double";
         var displayWidthForMobile = window.innerWidth < 650 ? "350" : "1400";
         var displayheightForMobile = window.innerWidth < 650 ? "500" : "900";
         console.log(window.innerWidth);
-    
+
         flipbook.turn({
           width: displayWidthForMobile,
           height: displayheightForMobile,
@@ -98,14 +107,13 @@
           when: {
             turning: function (event, page, view) {
               var book = $(this);
-              
-                currentPage = book.turn("page"),
-                pages = book.turn("pages");
-    
+
+              (currentPage = book.turn("page")), (pages = book.turn("pages"));
+
               Hash.go("page/" + page).update();
-    
+
               disableControls(page);
-    
+
               // Play the page turn audio
               var pageTurnAudio = document.getElementById("pageTurnAudio");
               if (pageTurnAudio) {
@@ -125,12 +133,12 @@
             },
           },
         });
-    
+
         $(document).keydown(function (e) {
           var previous = 37,
             next = 39,
             esc = 27;
-    
+
           switch (e.keyCode) {
             case previous:
               flipbook.turn("previous");
@@ -146,7 +154,7 @@
               break;
           }
         });
-    
+
         $(".next-button")
           .bind($.mouseEvents.over, function () {
             $(this).addClass("next-button-hover");
@@ -163,7 +171,7 @@
           .click(function () {
             flipbook.turn("next");
           });
-    
+
         $(".previous-button")
           .bind($.mouseEvents.over, function () {
             $(this).addClass("previous-button-hover");
@@ -180,25 +188,28 @@
           .click(function () {
             flipbook.turn("previous");
           });
-    
 
-        // Swipe left to turn to the next page
-        flipbook.on("swipeleft", function (event) {
+        var hammerOptions = {
+          preventDefault: true,
+        };
+
+        var mc = new Hammer($(".magazine")[0], hammerOptions);
+
+        mc.on("swipeleft", function () {
           flipbook.turn("next");
-          console.log("rerwrrrwe");
+          console.log("Swipe left");
         });
-    
-        // Swipe right to turn to the previous page
-        flipbook.on("swiperight", function (event) {
+
+        mc.on("swiperight", function () {
           flipbook.turn("previous");
-          console.log("rerwrrrwe");
+          console.log("Swipe right");
         });
-    
+
         flipbook.addClass("animated");
       }
-    
+
       // Zoom icon
-    
+
       yepnope({
         test: Modernizr.csstransforms,
         yep: ["../../lib/turn.js"],
@@ -207,6 +218,5 @@
         complete: loadApp,
       });
     </script>
-    
   </body>
 </html>
